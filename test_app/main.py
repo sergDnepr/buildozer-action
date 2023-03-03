@@ -1,17 +1,39 @@
-"""
-Simple Hello World app to test Buildozer Action.
-
-It builds Kivy app with file main.kv.
-"""
-
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivy.core.window import Window
+
+Window.size = (300, 500)
+
+navigation_helper = """
+Screen:
+
+    NavigationLayout:
+
+        ScreenManager:
+
+            Screen:
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    MDToolbar:
+                        title: "Navigation Drawer"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+
+                    Widget:
 
 
-class MainApp(App):
+        MDNavigationDrawer:
+            id: nav_drawer
+"""
+
+
+class DemoApp(MDApp):
+
     def build(self):
-        return Builder.load_file("main.kv")
+        screen = Builder.load_string(navigation_helper)
+        return screen
 
 
-if __name__ == "__main__":
-    MainApp().run()
+DemoApp().run()
